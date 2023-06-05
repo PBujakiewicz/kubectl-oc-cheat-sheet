@@ -16,3 +16,10 @@ oc adm manage-node node-1 --schedulable=true
 ```bash
 oc adm drain node-1
 ```
+
+<br /><br />
+
+## Manually sending logs to stdout in a container.
+```bash
+echo "test log1" >> /proc/1/fd/1
+```
