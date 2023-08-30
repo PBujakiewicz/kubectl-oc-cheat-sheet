@@ -31,3 +31,19 @@ echo "test log1" >> /proc/1/fd/1
 ```bash
 oc get $(oc api-resources --namespaced=true --verbs=list -o name | awk '{printf "%s%s",sep,$0;sep=","}') --ignore-not-found -n ${NAMESPACE} -o=custom-columns=KIND:.kind,NAME:.metadata.name --sort-by='kind'
 ```
+
+<br /><br />
+
+## Set replication to 0 in all deployments.
+```bash
+kubectl get deployments --all-namespaces -o json | kubectl patch -p '{"spec":{"replicas":0}}' -f -
+```
+
+<br /><br />
+
+## Set replication to 0 in all StatefulSet.
+```bash
+kubectl get statefulsets --all-namespaces -o json | kubectl patch -p '{"spec":{"replicas":0}}' -f -
+```
+
+<br /><br />
