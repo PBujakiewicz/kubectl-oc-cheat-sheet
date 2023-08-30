@@ -1,4 +1,5 @@
 # kubectl-oc-cheat-sheet
+oc is an alternative to kubectl in okd/openshift
 
 
 <br /><br />
