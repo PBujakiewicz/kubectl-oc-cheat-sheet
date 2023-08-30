@@ -47,3 +47,11 @@ kubectl get statefulsets --all-namespaces -o json | kubectl patch -p '{"spec":{"
 ```
 
 <br /><br />
+
+## All used images in containers.
+```bash
+kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.namespace}{"/"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{"\n"}{end}{range .spec.initContainers[*]}{.image}{"\n"}{end}{"\n"}{end}'
+```
+
+<br /><br />
+
