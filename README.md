@@ -62,7 +62,7 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.names
 
 <br /><br />
 
-## Pod spamming logs on stdout.
+## Pod spamming logs to stdout.
 ```bash
 apiVersion: v1
 kind: Pod
