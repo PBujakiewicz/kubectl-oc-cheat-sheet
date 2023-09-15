@@ -62,3 +62,26 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.names
 
 <br /><br />
 
+## Pod spamming logs on stdout.
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-spamer
+  namespace: siwy
+spec:
+  containers:
+  - name: bash
+    image: bash:alpine3.18
+    env:
+    - name: ID
+      value: asd78jhT2h
+    command:
+    - bash
+    - -c
+    - |
+      for i in {1..100}; do echo "log-spamer, id: $ID - log number $i" >> /proc/1/fd/1; done
+  restartPolicy: Never
+```
+
+<br /><br />
