@@ -4,6 +4,13 @@ oc is an alternative to kubectl in okd/openshift
 
 <br /><br />
 
+## Delete all pods from namespace.
+```bash
+oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n NS --force=true
+```
+
+<br /><br />
+
 ## Drain specify deployment.
 ```bash
 oc adm manage-node node-1 --schedulable=false
