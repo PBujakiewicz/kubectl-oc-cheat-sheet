@@ -11,6 +11,13 @@ oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n N
 
 <br /><br />
 
+## Delete all pods with status Completed, Evicted, Terminating from all namespaces.
+```bash
+for ns in $(oc get ns | grep Active | awk '{print $1}'); do for pod in $(oc get pods -n ${ns} | grep -E '(Completed|Evicted|Terminating)' | awk '{print $1}'); do oc delete pod --force=true  ${pod} -n ${ns}; done; done
+```
+
+<br /><br />
+
 ## Drain specify deployment.
 ```bash
 oc adm manage-node node-1 --schedulable=false
