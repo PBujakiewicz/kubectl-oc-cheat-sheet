@@ -101,3 +101,20 @@ spec:
 ```
 
 <br /><br />
+
+## Waiting pod.
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: waiting-pod
+spec:
+  containers:
+  - name: bash
+    image: bash:alpine3.18
+    command:
+      - "cat"
+    tty: true
+```
+
+<br /><br />
