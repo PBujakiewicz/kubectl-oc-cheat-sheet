@@ -4,6 +4,20 @@ oc is an alternative to kubectl in okd/openshift
 
 <br /><br />
 
+## Easily check your clusters for use of deprecated APIs. ([https://github.com/johanhaleby/kubetail](https://github.com/doitintl/kube-no-trouble))
+```bash
+kubent
+```
+
+<br /><br />
+
+## Tail: "kubectl logs -f " but for multiple pods. (https://github.com/johanhaleby/kubetail)
+```bash
+kubetail app2
+```
+
+<br /><br />
+
 ## Delete all pods from namespace.
 ```bash
 oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n NS --force=true
