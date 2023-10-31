@@ -90,6 +90,20 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.names
 
 <br /><br />
 
+## Watch pods with errors (+ use awk in watch).
+```bash
+watch -n 5 'oc get pods -A --no-headers | grep -v -E "(Running|Completed)" | awk '\''{print $1, $2, $4}'\'''
+```
+
+<br /><br />
+
+## Watch events with "Timeout waiting for systemd" maximum up to 1 hour.
+```bash
+watch -n 5 'kubectl get events --all-namespaces --sort-by=.metadata.creationTimestamp -o custom-columns=LAST-SEEN:.lastTimestamp,NAMESPACE:.metadata.namespace,POD:.involvedObject.name,NODE:.source.host,MESSAGE:.message | awk -v d1="$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ" -d "1 hour ago")" "BEGIN { OFS = \"\t\"; print \"LAST-SEEN\", \"NAMESPACE\", \"POD\", \"NODE\", \"MESSAGE\" } \$1 > d1 { print \$0 }" | grep "Timeout waiting for systemd" | awk '\''{print $4}'\'' | sort | uniq -c'
+```
+
+<br /><br />
+
 ## Pod spamming logs to stdout.
 ```bash
 apiVersion: batch/v1
