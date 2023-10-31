@@ -92,7 +92,7 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.names
 
 ## Watch pods with errors (+ use awk in watch).
 ```bash
-watch -n 5 'oc get pods -A --no-headers | grep -v -E "(Running|Completed)" | awk '\''{print $1, $2, $4}'\'''
+watch -n 5 'oc get pods -A --no-headers | grep -v -E "(Running|Completed)" | awk '\''{print $1, $2, $4, $6}'\'''
 ```
 
 <br /><br />
