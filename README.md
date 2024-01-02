@@ -140,9 +140,9 @@ spec:
   containers:
   - name: bash
     image: bash:alpine3.18
-    command:
-      - "cat"
-    tty: true
+    command: ["/bin/sh","-c"]
+    args: ["apk add busybox-extras && sleep infinity"]
+  tty: true
 ```
 
 <br /><br />
