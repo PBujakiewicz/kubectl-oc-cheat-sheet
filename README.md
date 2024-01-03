@@ -1,4 +1,4 @@
-# kubectl-oc-cheat-sheet
+f# kubectl-oc-cheat-sheet
 oc is an alternative to kubectl in okd/openshift
 
 
@@ -143,6 +143,14 @@ spec:
     command: ["/bin/sh","-c"]
     args: ["apk add busybox-extras && sleep infinity"]
   tty: true
+```
+
+<br /><br />
+
+## Helm.
+```bash
+# Build and test helm template
+helm template name . | oc apply --dry-run=server -f -
 ```
 
 <br /><br />
