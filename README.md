@@ -111,7 +111,7 @@ kind: Job
 metadata:
   name: log-spamer
 spec:
-  parallelism: 100
+  parallelism: 10
   template:
     spec:
       containers:
@@ -119,12 +119,12 @@ spec:
         image: bash:alpine3.18
         env:
         - name: ID
-          value: asd78jhT2h
+          value: asd7wxxx1
         command:
         - bash
         - -c
         - |
-          for i in {1..100}; do echo "log-spamer, id: $ID - log number $i" >> /proc/1/fd/1; done
+          for i in {1..100}; do echo "$(date '+%Y-%m-%d %T') $(hostname) id: $ID - log number $i" && sleep 0.01 >> /proc/1/fd/1; done
       restartPolicy: Never
 ```
 
