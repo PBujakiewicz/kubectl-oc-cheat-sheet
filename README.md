@@ -154,3 +154,10 @@ helm template name . | oc apply --dry-run=server -f -
 ```
 
 <br /><br />
+
+## Show all prometheus alerts with severity.
+```bash
+oc get prometheusrules -A  --no-headers| awk '{print $3, $1, $2}' | sort -r | awk '{print "oc get prometheusrules " $3 " -n " $2 " -o yaml | grep -E \"alert:|severity:\""}' | bash | sed -r 's/    - alert: //g'
+```
+
+<br /><br />
