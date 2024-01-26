@@ -18,6 +18,13 @@ kubetail app2
 
 <br /><br />
 
+## This is a simple CLI that provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster. (https://github.com/robscott/kube-capacity)
+```bash
+kube-capacity
+```
+
+<br /><br />
+
 ## Delete all pods from namespace.
 ```bash
 oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n NS --force=true
