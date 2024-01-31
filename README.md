@@ -101,6 +101,12 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{.metadata.names
 ```bash
 watch -n 5 'oc get pods -A --no-headers | grep -v -E "(Running|Completed)" | awk '\''{print $1, $2, $4, $6}'\'''
 ```
+<br /><br />
+
+## Watch and count pods status.
+```bash
+watch -n 5 'oc get pods -A --no-headers | awk '\''{print $4}'\'' | sort | uniq -c'
+```
 
 <br /><br />
 
