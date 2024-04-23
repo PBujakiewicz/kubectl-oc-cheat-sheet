@@ -154,7 +154,7 @@ spec:
   - name: bash
     image: bash:alpine3.18
     command: ["/bin/sh","-c"]
-    args: ["apk add busybox-extras && sleep infinity"]
+    args: ["apk add busybox-extras curl && sleep infinity"]
   tty: true
 ```
 
