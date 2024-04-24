@@ -27,7 +27,7 @@ kube-capacity
 
 ## Delete all pods from namespace.
 ```bash
-oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n NS --force=true
+oc delete pods $(oc get pods -o=jsonpath='{.items[*].metadata.name}' -n NS) -n NS
 ```
 
 <br /><br />
