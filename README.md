@@ -174,3 +174,27 @@ oc get prometheusrules -A  --no-headers| awk '{print $3, $1, $2}' | sort -r | aw
 ```
 
 <br /><br />
+
+## Checking all expired ssl/tls certificate in secrets.
+```bash
+oc get secrets -A --no-headers | grep NS | awk -v current_date=$(date +"%s") '{
+    print "\nNS: "$1"\tsecret: "$2":";
+
+    command="oc get secret "$2" -n "$1" -o jsonpath=\"{.data['\''tls\\.crt'\'']}\" | base64 -d | openssl x509 -text -noout 2>/dev/null | grep \"Not After\" ";
+    command | getline result;
+    close(command);
+    split(result, arr, ": ");
+    not_after=arr[2];
+
+    command = "date -u -d \""not_after"\" +%s";
+    command | getline not_after2;
+    close(command);
+
+    if (not_after2 <= current_date)
+        print result
+        not_after2=""
+        result=""
+}' | grep -B 2 'Not After'
+```
+
+<br /><br />
