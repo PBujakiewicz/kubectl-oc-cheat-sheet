@@ -149,12 +149,14 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: waiting-pod
+  annotations:
+    sidecar.istio.io/inject: "false"
 spec:
   containers:
-  - name: bash
-    image: bash:alpine3.18
+  - name: python
+    image: python:3.9.19-alpine3.20
     command: ["/bin/sh","-c"]
-    args: ["apk add busybox-extras curl && sleep infinity"]
+    args: ["apk add busybox-extras curl git bash && pip install pyrabbit pika pyyaml && sleep infinity"]
   tty: true
 ```
 
