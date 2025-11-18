@@ -156,7 +156,7 @@ spec:
   - name: python
     image: python:3.9.19-alpine3.20
     command: ["/bin/sh","-c"]
-    args: ["apk add busybox-extras curl git bash && pip install pyrabbit pika pyyaml && sleep infinity"]
+    args: ["apk add busybox-extras bind-tools curl git bash && pip install pyrabbit pika pyyaml && sleep infinity"]
   tty: true
 ```
 
