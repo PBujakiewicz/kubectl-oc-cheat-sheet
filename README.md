@@ -162,6 +162,54 @@ spec:
 
 <br /><br />
 
+## Deployment - Best Practices.
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waiting-deployment
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: waiting-pod
+  template:
+    metadata:
+      labels:
+        app: waiting-pod
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      terminationGracePeriodSeconds: 30
+      affinity:
+        # NOTE: Affinity rules are not used because topologySpreadConstraints handle distribution
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: waiting-pod
+      containers:
+      - name: python
+        image: python:3.9.19-alpine3.20
+        command: ["/bin/sh","-c"]
+        args:
+          - apk add busybox-extras bind-tools curl git bash && \
+            sleep infinity
+        tty: true
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sh", "-c", "sleep 30s"]
+```
+<br /><br />
+
 ## Helm.
 ```bash
 # Build and test helm template
