@@ -178,16 +178,18 @@ spec:
   selector:
     matchLabels:
       app: waiting-pod
+      environment: dev
+      team: devops
   template:
     metadata:
       labels:
         app: waiting-pod
+        environment: dev
+        team: devops
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
       terminationGracePeriodSeconds: 30
-      affinity:
-        # NOTE: Affinity rules are not used because topologySpreadConstraints handle distribution
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -195,18 +197,40 @@ spec:
           labelSelector:
             matchLabels:
               app: waiting-pod
+              environment: dev
+              team: devops
+      affinity:
+        # NOTE: Affinity rules are not used because topologySpreadConstraints handle distribution
       containers:
       - name: python
         image: python:3.9.19-alpine3.20
         command: ["/bin/sh","-c"]
         args:
-          - apk add busybox-extras bind-tools curl git bash && \
-            sleep infinity
+          - "/sbin/apk add --no-cache busybox-extras bind-tools curl git bash && \
+             /usr/local/bin/pip install pyrabbit pika pyyaml && \
+             /bin/sleep infinity"
         tty: true
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "echo ok"]
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "echo ok"]
+          initialDelaySeconds: 5
+          periodSeconds: 10
         lifecycle:
           preStop:
             exec:
-              command: ["sh", "-c", "sleep 30s"]
+              command: ["/bin/sh", "-c", "/bin/sleep 30s"]
 ```
 <br /><br />
 
