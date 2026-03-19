@@ -39,6 +39,13 @@ for ns in $(oc get ns | grep Active | awk '{print $1}'); do for pod in $(oc get 
 
 <br /><br />
 
+## Marking the node to be deleted.
+```bash
+oc annotate machine <NODE> machine.openshift.io/delete-machine=true -n openshift-machine-api
+```
+
+<br /><br />
+
 ## Drain specify deployment.
 ```bash
 oc adm manage-node node-1 --schedulable=false
