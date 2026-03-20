@@ -117,6 +117,13 @@ watch -n 5 'oc get pods -A --no-headers | awk '\''{print $4}'\'' | sort | uniq -
 
 <br /><br />
 
+## Custom-columns. No restart column, easy to parse with awk.
+```bash
+oc get pod -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName
+```
+
+<br /><br />
+
 ## Watch events with "Timeout waiting for systemd" maximum up to 1 hour.
 ```bash
 watch -n 5 'kubectl get events --all-namespaces --sort-by=.metadata.creationTimestamp -o custom-columns=LAST-SEEN:.lastTimestamp,NAMESPACE:.metadata.namespace,POD:.involvedObject.name,NODE:.source.host,MESSAGE:.message | awk -v d1="$(TZ=UTC date +"%Y-%m-%dT%H:%M:%SZ" -d "1 hour ago")" "BEGIN { OFS = \"\t\"; print \"LAST-SEEN\", \"NAMESPACE\", \"POD\", \"NODE\", \"MESSAGE\" } \$1 > d1 { print \$0 }" | grep "Timeout waiting for systemd" | awk '\''{print $4}'\'' | sort | uniq -c'
