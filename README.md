@@ -117,9 +117,9 @@ watch -n 5 'oc get pods -A --no-headers | awk '\''{print $4}'\'' | sort | uniq -
 
 <br /><br />
 
-## Custom-columns. No restart column, easy to parse with awk.
+## Number of Fields in awk. Thankes NF, avoid restart column.
 ```bash
-oc get pod -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName
+oc get pods -A -o wide | grep -iE "creating|init" | grep -i openshift | awk '{print $(NF-4) " " $(NF-2)}' | sort | uniq -c | sort
 ```
 
 <br /><br />
